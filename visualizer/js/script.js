@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
             src: 'videos/video1.mp4',
             thumbnail: 'thumbnails/video1.jpg',
             title: 'Video 1',
-            attributes: ['Real-Time Visual Understanding'],
+            attributes: ['Object Perception','Causal Reasoning','Text-Rich Understanding','Attribute Perception'],
             questions: [
                 { 
                     time: 4, 
@@ -66,6 +66,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         'Gemini 1.5pro': "C",
                         'LLaVA-OneVision': "C",
                         'MiniCPM-V 2.6': "C",
+                        "InternVL-V2-8": "C. He scored a goal.",
+                        "Kangaroo": "C. He scored a goal",
+                        "LLaVA-OneVision": "C",
+                        "LongVA": "C",
+                        "VideoCCam": "C. He scored a goal.",
+                        "VideoLLaMA2": "C. He scored a goal. "
                     }
                 },
                 { 
@@ -85,12 +91,18 @@ document.addEventListener('DOMContentLoaded', function() {
                         'Gemini 1.5pro': "D",
                         'LLaVA-OneVision': "D",
                         'MiniCPM-V 2.6': "D",
+                        "InternVL-V2-8": "D. Spotify.",
+                        "Kangaroo": "D. Spotify",
+                        "LLaVA-OneVision": "D",
+                        "LongVA": "D",
+                        "VideoCCam": "D. Spotify.",
+                        "VideoLLaMA2": "C. Adidas. "
                     }
                 },
                 { 
                     time: 80, 
                     text: 'What color is the goalie\'s uniform?',
-                    taskType: 'Attribute Recognition',
+                    taskType: 'Attribute Perception',
                     options: [
                         'A. Blue.',
                         'B. Red.',
@@ -104,12 +116,18 @@ document.addEventListener('DOMContentLoaded', function() {
                         'Gemini 1.5pro': "D",
                         'LLaVA-OneVision': "D",
                         'MiniCPM-V 2.6': "D",
+                        "InternVL-V2-8": "D. Red.",
+                        "Kangaroo": "D. Red",
+                        "LLaVA-OneVision": "D",
+                        "LongVA": "D",
+                        "VideoCCam": "A. Blue.",
+                        "VideoLLaMA2": "D. Red. "
                     }
                 },
                 { 
                     time: 128, 
                     text: 'What is the color of the cooler labeled "PRIME" near the team bench?',
-                    taskType: 'Attribute Recognition',
+                    taskType: 'Attribute Perception',
                     options: [
                         'A. Blue.',
                         'B. Yellow.',
@@ -322,41 +340,41 @@ document.addEventListener('DOMContentLoaded', function() {
                 {
                     time: 26, 
                     text: 'When the number 20 appears in the middle of the sun in the video, output "20".',
-                    taskType: 'Active Output',
-                    options: [],
-                    correctOption: '20',
+                    taskType: 'Proactive Output',
+                    correctOption: '62',
+                    groundTruthOutput: '20',
                     modelReplies: {}
                 },
                 {
                     time: 80, 
                     text: 'When the number 20 in red appears in the video, output "20".',
-                    taskType: 'Active Output',
-                    options: [],
-                    correctOption: '20',
+                    taskType: 'Proactive Output',
+                    correctOption: '124',
+                    groundTruthOutput: '20',
                     modelReplies: {}
                 },
                 {
                     time: 176, 
                     text: 'When 7 potatoes appear in the video, output "7".',
-                    taskType: 'Active Output',
-                    options: [],
-                    correctOption: '7',
+                    taskType: 'Proactive Output',
+                    correctOption: '182',
+                    ground_truth_output: "7",
                     modelReplies: {}
                 },
                 {
                     time: 407, 
                     text: 'When there are only 5 teddy bears left on the bed, output "5".',
-                    taskType: 'Active Output',
-                    options: [],
-                    correctOption: '5',
+                    taskType: 'Proactive Output',
+                    correctOption: '430',
+                    ground_truth_output: "5",
                     modelReplies: {}
                 },
                 {
                     time: 645, 
                     text: 'When a total of 5 cartoon characters wearing hats have appeared in the video, output "5".',
-                    taskType: 'Active Output',
-                    options: [],
-                    correctOption: '5',
+                    taskType: 'Proactive Output',
+                    correctOption: '652',
+                    ground_truth_output: "5",
                     modelReplies: {}
                 }
             ]
@@ -776,6 +794,343 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             ]
         },
+        {
+            src: 'videos/Causal Reasoning/video.mp4',
+            thumbnail: 'videos/Causal Reasoning/video.jpg',
+            title: '4',
+            attributes: ['Causal Reasoning'],
+            questions: [
+                {
+                    time: 124,
+                    text: "Why can thieves enter the room without being detected?",
+                    taskType: 'Causal Reasoning',
+                    options: [
+                        "A. Because the security system is broken.",
+                        "B. Because the masters have all fallen asleep.",
+                        "C. Because the door was accidentally left unlocked.",
+                        "D. Because the thieves are using a special device to stay silent."
+                    ],
+                    correctOption: 'B',
+                    modelReplies: {
+                        'Claude 3.5 sonnet': "B"
+                    }
+                },
+                {
+                    time: 143,
+                    text: "Why does this cat glare viciously at the person in black?",
+                    taskType: 'Causal Reasoning', 
+                    options: [
+                        "A. Because the person in black took away the cat's favorite toy.",
+                        "B. Because the person in black is blocking the cat's path.",
+                        "C. Because the man in black just stepped on this cat.",
+                        "D. Because the person in black made a loud noise that startled the cat."
+                    ],
+                    correctOption: 'C',
+                    modelReplies: {
+                        'Claude 3.5 sonnet': "C"
+                    }
+                },
+                {
+                    time: 247,
+                    text: "Why does the person start searching through his wardrobe?",
+                    taskType: 'Causal Reasoning',
+                    options: [
+                        "A. Because he wants to clean his room.",
+                        "B. Because he is checking if he has lost anything.",
+                        "C. Because he is preparing to leave the house.",
+                        "D. Because he cannot find his wallet."
+                    ],
+                    correctOption: 'B',
+                    modelReplies: {
+                        'Claude 3.5 sonnet': "B"
+                    }
+                },
+                {
+                    time: 360,
+                    text: "Why does the man offer his underwear to the woman as a replacement bag?",
+                    taskType: 'Causal Reasoning',
+                    options: [
+                        "A. Because the woman forgot to bring her shopping bag.",
+                        "B. Because the man is trying to make the woman laugh with a joke.",
+                        "C. Because the lady's shopping bag is torn.",
+                        "D. Because the woman mentioned she needed something to carry her things in."
+                    ],
+                    correctOption: 'C',
+                    modelReplies: {
+                        'Claude 3.5 sonnet': "C"
+                    }
+                },
+
+
+                {
+                    time: 477,
+                    text: "Why does the character hide behind structures on the roof?",
+                    taskType: 'Causal Reasoning',
+                    options: [
+                        "A. Because he heard a loud noise and got scared.",
+                        "B. Because he noticed a helicopter approaching and wanted to stay hidden.",
+                        "C. Because the thief in black clothes spotted him and chased after him.",
+                        "D. Because he saw the roof starting to collapse and needed to find safety."
+                    ],
+                    correctOption: 'C',
+                    modelReplies: {
+                        'Claude 3.5 sonnet': "C"
+                    }
+                }
+            ]
+        },
+        {
+            src: 'videos/Action Perception/video.mp4',
+            thumbnail: 'videos/Action Perception/video.jpg',
+            title: 'video 10',
+            attributes: ['Action Perception'],
+            questions: [
+                {
+                    time: 8,
+                    text: "What did the blue car do just now?",
+                    taskType: 'Action Perception',
+                    options: [
+                        "A. It struck the motorcyclist.",
+                        "B. It started moving.",
+                        "C. It stopped at the intersection.",
+                        "D. It swerved to avoid debris."
+                    ],
+                    correctOption: 'A',
+                    modelReplies: {
+                        'Claude 3.5 sonnet': "A"
+                    }
+                },
+                {
+                    time: 159,
+                    text: "What is the blonde-haired man doing right now?",
+                    taskType: 'Action Perception',
+                    options: [
+                        "A. Looking at his phone.",
+                        "B. Kneeling beside the person on the ground.",
+                        "C. Talking to the man with dark hair.",
+                        "D. Walking away from the scene."
+                    ],
+                    correctOption: 'A',
+                    modelReplies: {
+                        'Claude 3.5 sonnet': "A"
+                    }
+                },
+                {
+                    time: 356,
+                    text: "What is the man in the patterned shirt doing right now?",
+                    taskType: 'Action Perception',
+                    options: [
+                        "A. Sitting on the scooter, looking towards the road.",
+                        "B. Walking away from the scooter.",
+                        "C. Standing still near the scooter.", 
+                        "D. Interacting with the blue car."
+                    ],
+                    correctOption: 'A',
+                    modelReplies: {
+                        'Claude 3.5 sonnet': "A"
+                    }
+                },
+
+                {
+                    time: 480,
+                    text: "What is the man in the striped shirt doing right now?",
+                    taskType: 'Action Perception', 
+                    options: [
+                        "A. Walking away from the blue car.",
+                        "B. Standing by the blue car.",
+                        "C. Talking to the man in the blue jacket.",
+                        "D. Gesturing with his hands."
+                    ],
+                    correctOption: 'A',
+                    modelReplies: {
+                        'Claude 3.5 sonnet': "A"
+                    }
+                },
+                {
+                    time: 619,
+                    text: "What is the driver doing right now?",
+                    taskType: 'Action Perception',
+                    options: [
+                        "A. Navigating through moderately empty streets.",
+                        "B. Adjusting the rearview mirror.",
+                        "C. Honking the horn.",
+                        "D. Switching on the headlights."
+                    ],
+                    correctOption: 'A',
+                    modelReplies: {
+                        'Claude 3.5 sonnet': "A"
+                    }
+                },
+
+            ]
+        },
+
+        {
+            src: 'videos/Prospective Reasoning/video.mp4',
+            thumbnail: 'videos/Prospective Reasoning/video.jpg',
+            title: 'Math Tutorial - Perimeter',
+            attributes: ['Prospective Reasoning'],
+            questions: [
+                {
+                    time: 11,
+                    text: "What might the speaker explain next?",
+                    taskType: 'Prospective Reasoning',
+                    options: [
+                        "A. The area of different shapes.",
+                        "B. How to measure the diameter.",
+                        "C. The concept of length in 2-dimensional shapes.", 
+                        "D. How to calculate perimeter."
+                    ],
+                    correctOption: 'D',
+                    modelReplies: {
+                        'Claude 3.5 sonnet': "D"
+                    }
+                },
+                {
+                    time: 133,
+                    text: "What will the speaker most likely explain next?",
+                    taskType: 'Prospective Reasoning',
+                    options: [
+                        "A. How to calculate the perimeter of the shape.",
+                        "B. How to convert meters into centimeters.",
+                        "C. The differences between perimeter and area.",
+                        "D. How to measure the perimeter accurately."
+                    ],
+                    correctOption: 'A',
+                    modelReplies: {
+                        'Claude 3.5 sonnet': "A"
+                    }
+                },
+                {
+                    time: 213,
+                    text: "What might the speaker explain next?",
+                    taskType: 'Prospective Reasoning',
+                    options: [
+                        "A. How to calculate the area of the rectangle.",
+                        "B. How to find the perimeter of a rectangle.",
+                        "C. How to label the units.",
+                        "D. How to measure with a ruler."
+                    ],
+                    correctOption: 'B',
+                    modelReplies: {
+                        'Claude 3.5 sonnet': "B"
+                    }
+                },
+                {
+                    time: 306,
+                    text: "What might the speaker discuss next?",
+                    taskType: 'Prospective Reasoning',
+                    options: [
+                        "A. How to calculate the perimeter of any regular polygon.",
+                        "B. The significance of repeated addition.",
+                        "C. The properties of regular polygons.",
+                        "D. The importance of perimeter in geometry."
+                    ],
+                    correctOption: 'A',
+                    modelReplies: {
+                        'Claude 3.5 sonnet': "A"
+                    }
+                },
+                {
+                    time: 392,
+                    text: "What might the speaker ask the students to do next?",
+                    taskType: 'Prospective Reasoning',
+                    options: [
+                        "A. Calculate the area of the shape.",
+                        "B. Determine the perimeter of the shape.",
+                        "C. Measure each side length.",
+                        "D. Convert the measurements to centimeters."
+                    ],
+                    correctOption: 'B',
+                    modelReplies: {
+                        'Claude 3.5 sonnet': "B"
+                    }
+                }
+            ]
+        },
+        {
+            src: 'videos/Object Perception/video.mp4',
+            thumbnail: 'videos/Object Perception/video.jpg',
+            title: 'Flying POV',
+            attributes: ['Object Perception'],
+            questions: [
+                {
+                    time: 1,
+                    text: "What device is the person currently using to capture the video?",
+                    taskType: 'Object Perception',
+                    options: [
+                        "A. Head-mounted camera.",
+                        "B. Smartphone.",
+                        "C. DSLR camera.",
+                        "D. Camcorder."
+                    ],
+                    correctOption: 'A',
+                    modelReplies: {
+                        'Claude 3.5 sonnet': "A"
+                    }
+                },
+                {
+                    time: 123,
+                    text: "What type of vehicle is visible in the parking lot right now?",
+                    taskType: 'Object Perception', 
+                    options: [
+                        "A. Car.",
+                        "B. Heavy truck.",
+                        "C. Bus.",
+                        "D. Helicopter."
+                    ],
+                    correctOption: 'A',
+                    modelReplies: {
+                        'Claude 3.5 sonnet': "A"
+                    }
+                },
+                {
+                    time: 250,
+                    text: "What type of aircraft is visible right now?",
+                    taskType: 'Object Perception',
+                    options: [
+                        "A. Helicopter.",
+                        "B. Airplane.",
+                        "C. Drone.",
+                        "D. Glider."
+                    ],
+                    correctOption: 'A',
+                    modelReplies: {
+                        'Claude 3.5 sonnet': "A"
+                    }
+                },
+                {
+                    time: 360,
+                    text: "What is the person grabbing from the food basket right now?",
+                    taskType: 'Object Perception',
+                    options: [
+                        "A. Chicken strips.",
+                        "B. French fries.",
+                        "C. Onion rings.",
+                        "D. Mozzarella sticks."
+                    ],
+                    correctOption: 'A',
+                    modelReplies: {
+                        'Claude 3.5 sonnet': "A"
+                    }
+                },
+                {
+                    time: 489,
+                    text: "What navigational tool is visible on the screen right now?",
+                    taskType: 'Object Perception',
+                    options: [
+                        "A. GPS device.",
+                        "B. Compass.",
+                        "C. Altimeter.", 
+                        "D. Airspeed indicator."
+                    ],
+                    correctOption: 'A',
+                    modelReplies: {
+                        'Claude 3.5 sonnet': "A"
+                    }
+                }
+            ]
+        },
 
     ];
 
@@ -1143,58 +1498,62 @@ document.addEventListener('DOMContentLoaded', function() {
     // 显示问题和模型回复
     function showQuestion(question, auto) {
         if (auto && shownQuestions.has(question.time)) return;
-
+    
         const optionsList = document.getElementById('options-list');
-        questionText.innerHTML = `
-            <strong>Question:  </strong> ${question.text}<br>
-            <strong>Task Type:  </strong> ${question.taskType}<br>
-            <strong>Query Time:  </strong> ${formatTime(question.time)}
-        `;
-
+        let questionContent = '';
+    
+        // Check if it's a Sequential Question
+        if (question.taskType === 'Sequential Question Answering') {
+            // Find previous question
+            const prevQuestion = findPreviousQuestion(question);
+            if (prevQuestion) {
+                questionContent += `
+                    <div class="previous-question">
+                        <strong>Previous Question: </strong>${prevQuestion.text}<br>
+                        <strong>Previous Task Type: </strong>${prevQuestion.taskType}<br>
+                        <strong>Previous Query Time: </strong>${formatTime(prevQuestion.time)}<br>
+                        <strong>Previous Answer: </strong>${prevQuestion.options.find(opt => opt.trim().charAt(0) === prevQuestion.correctOption)}
+                    </div>
+                `;
+            }
+        }
+    
+        // Add current question content
+        questionContent += `<strong>Question: </strong>${question.text}<br>
+            <strong>Task Type: </strong>${question.taskType}<br>
+            <strong>Query Time: </strong>${formatTime(question.time)}`;
+    
+        // Add specific content for Proactive Output
+        if (question.taskType === 'Proactive Output') {
+            questionContent += `<br>
+                <div class="ground-truth">
+                    <strong>Ground Truth Response Time: </strong>${question.correctOption}<br>
+                    <strong>Ground Truth Output: </strong>${question.groundTruthOutput}
+                </div>`;
+        }
+    
+        questionText.innerHTML = questionContent;
+    
         optionsList.innerHTML = '';
-
-        if (question.options) {
+    
+        // Only show options list for non-Proactive Output questions
+        if (question.options && question.taskType !== 'Proactive Output') {
             question.options.forEach(option => {
                 const li = document.createElement('li');
                 li.textContent = option;
-
-                // 获取选项标识符（A, B, C, D）
                 const optionIdentifier = option.trim().charAt(0);
-
-                // 如果是正确选项，添加 .correct 类
                 if(optionIdentifier === question.correctOption) {
                     li.classList.add('correct');
                 }
-
                 optionsList.appendChild(li);
             });
         }
-
+    
         currentQuestionTime = question.time;
         updateModelReplies();
-
         questionPopup.style.display = 'block';
-
-        if (auto) {
-            video.pause();
-            playPauseIcon.src = 'icons/play.png';
-
-            // 标记问题已显示
-            shownQuestions.add(question.time);
-
-            // 清除已有的超时
-            if (autoPauseTimeout) {
-                clearTimeout(autoPauseTimeout);
-            }
-
-            设置5秒后继续播放
-            autoPauseTimeout = setTimeout(() => {
-                hideQuestion();
-                video.play();
-                playPauseIcon.src = 'icons/pause.png';
-                autoPauseTimeout = null;
-            }, 5000);
-        }
+    
+        // ... rest of the existing showQuestion function ...
     }
 
     // 检查并显示问题
@@ -1213,6 +1572,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         }
+    }
+
+    function findPreviousQuestion(currentQuestion) {
+        const currentIndex = currentQuestions.findIndex(q => q.time === currentQuestion.time);
+        if (currentIndex > 0) {
+            return currentQuestions[currentIndex - 1];
+        }
+        return null;
     }
 
     // 隐藏问题弹出框

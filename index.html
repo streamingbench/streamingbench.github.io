@@ -50,6 +50,7 @@
   <script src="./data/results/model_scores.js" defer></script>
 
   <script src="./visualizer/data/data_public.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -140,7 +141,7 @@
               </span>
               <!-- Code Link. -->
               <span class="link-block">
-                <a href=""
+                <a href="https://github.com/Fzacker/StreamingBench"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fab fa-github"></i>
@@ -1223,13 +1224,14 @@
         <div class="content has-text-justified">
           <p> -->
 
-            
+
+
 <section class="section">
   <div class="container">
     <div class="columns is-centered has-text-centered">
       <!-- <div class="column is-full-width has-text-centered"> -->
         <div class="column is-four-fifths">
-        <h2 class="title is-3">Data Statistics</h2>
+        
         <div class="content has-text-justified">
           <div id="results-carousel" class="carousel results-carousel">
             <div class="box m-5">
@@ -1269,12 +1271,599 @@
   </div>
 </section>
 
-<!-- RESULTS SECTION -->
+<section class="section">
+  <h2 class="title is-3" style="text-align: center;">Data Statistics</h2>
+  <div class="container">
+    <div id="charts-carousel" class="carousel">
+      <!-- Video Category Chart -->
+      <div class="box m-5 chart-container" style="background: linear-gradient(135deg, #ffffff, #f8f9fa); border-radius: 20px; box-shadow: 0 15px 35px rgba(50,115,220,0.1); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);" 
+           onmouseover="this.style.transform='translateY(-5px)'" 
+           onmouseout="this.style.transform='translateY(0)'">
+        <div class="columns is-centered">
+          <div class="column is-half">
+            <div class="chart-wrapper" style="padding: 25px;">
+              <canvas id="videoCategoryChart" style="max-width: 100%; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));"></canvas>
+            </div>
+          </div>
+          <div class="column is-half">
+            <table class="table is-fullwidth is-hoverable" style="background: transparent; margin-top: 25px; border-radius: 10px; overflow: hidden;">
+              <thead>
+                <tr>
+                  <th style="border-bottom: 3px solid #3273dc; color: #363636; font-weight: 600;">Category</th>
+                  <th style="border-bottom: 3px solid #3273dc; color: #363636; font-weight: 600;">Count</th>
+                  <th style="border-bottom: 3px solid #3273dc; color: #363636; font-weight: 600;">Percentage</th>
+                </tr>
+              </thead>
+              <tbody id="videoCategoryTable" style="font-size: 0.95rem;">
+                <!-- Dynamic table content -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Task Distribution Chart -->
+      <div class="box m-5 chart-container" style="background: linear-gradient(135deg, #ffffff, #f8f9fa); border-radius: 20px; box-shadow: 0 15px 35px rgba(50,115,220,0.1); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);"
+           onmouseover="this.style.transform='translateY(-5px)'" 
+           onmouseout="this.style.transform='translateY(0)'">
+        <div class="chart-wrapper" style="padding: 25px;">
+          <canvas id="taskChart" width="800" height="400" style="max-width: 100%; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));"></canvas>
+        </div>
+      </div>
+
+      <!-- Query Count Chart -->
+      <div class="box m-5 chart-container" style="background: linear-gradient(135deg, #ffffff, #f8f9fa); border-radius: 20px; box-shadow: 0 15px 35px rgba(50,115,220,0.1); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);"
+           onmouseover="this.style.transform='translateY(-5px)'" 
+           onmouseout="this.style.transform='translateY(0)'">
+        <div class="chart-wrapper" style="padding: 25px;">
+          <canvas id="queryCountChart" style="max-width: 100%; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));"></canvas>
+        </div>
+      </div>
+
+      <!-- Temporal Clues Chart -->
+      <div class="box m-5 chart-container" style="background: linear-gradient(135deg, #ffffff, #f8f9fa); border-radius: 20px; box-shadow: 0 15px 35px rgba(50,115,220,0.1); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);"
+           onmouseover="this.style.transform='translateY(-5px)'" 
+           onmouseout="this.style.transform='translateY(0)'">
+        <div class="chart-wrapper" style="padding: 25px;">
+          <canvas id="temporalCluesChart" style="max-width: 100%; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));"></canvas>
+        </div>
+      </div>
+      
+      <div class="box m-5 chart-container" style="background: linear-gradient(135deg, #ffffff, #f8f9fa); border-radius: 20px; box-shadow: 0 15px 35px rgba(50,115,220,0.1); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);"
+           onmouseover="this.style.transform='translateY(-5px)'" 
+           onmouseout="this.style.transform='translateY(0)'">
+        <div class="content has-text-centered">
+          <img src="static/images/Temporal_Clue.png" alt="arithmetic reasoning" 
+               style="width: 70%; border-radius: 15px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); transition: all 0.3s ease;"
+               onmouseover="this.style.transform='scale(1.02)'" 
+               onmouseout="this.style.transform='scale(1)'"/>
+          <p> </p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</section>
+
+<script>
+// Query Count Chart
+const queryCountCtx = document.getElementById('queryCountChart').getContext('2d');
+new Chart(queryCountCtx, {
+  type: 'bar',
+  data: {
+    labels: ['[0-60)', '[60-120)', '[120-180)', '[180-240)', '[240-300)', '[300-340)', '[340-420)', '[420-480)', '[480-540)', '[540-600)', '≥600'],
+    datasets: [{
+      label: 'Query Count',
+      data: [909, 521, 674, 498, 441, 358, 296, 192, 265, 136, 210],
+      backgroundColor: function(context) {
+        const gradient = context.chart.ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'rgba(54, 162, 235, 0.9)');
+        gradient.addColorStop(1, 'rgba(54, 162, 235, 0.4)');
+        return gradient;
+      },
+      borderColor: 'rgba(54, 162, 235, 1)',
+      borderWidth: 2,
+      borderRadius: 8,
+      barPercentage: 0.8,
+    }]
+  },
+  options: {
+    responsive: true,
+    animation: {
+      duration: 2000,
+      easing: 'easeInOutQuart'
+    },
+    interaction: {
+      mode: 'index',
+      intersect: false,
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Query Count',
+          font: {
+            size: 14,
+            weight: 'bold'
+          }
+        },
+        grid: {
+          color: 'rgba(0, 0, 0, 0.1)',
+          drawBorder: false
+        }
+      },
+      x: {
+        title: {
+          display: true,
+          text: 'Time Range (seconds)',
+          font: {
+            size: 14,
+            weight: 'bold'
+          }
+        },
+        grid: {
+          display: false
+        }
+      }
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: 'Query Count Distribution',
+        font: {
+          size: 18,
+          weight: 'bold'
+        },
+        padding: 20
+      },
+      legend: {
+        display: false
+      },
+      tooltip: {
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        titleColor: '#000',
+        bodyColor: '#000',
+        borderColor: 'rgba(54, 162, 235, 0.8)',
+        borderWidth: 1,
+        padding: 10,
+        displayColors: false,
+        callbacks: {
+          label: function(context) {
+            return `Count: ${context.parsed.y}`;
+          }
+        }
+      }
+    }
+  }
+});
+
+// Video Category Chart
+const videoCategoryCtx = document.getElementById('videoCategoryChart').getContext('2d');
+const videoCategoryData = [
+  { category: 'Education', count: 182, percentage: 20.22, subCategories: ['Online Tutorial', 'Science', 'Art', 'Handcraft', 'Lecture'] },
+  { category: 'Life Record', count: 293, percentage: 32.56, subCategories: ['Daily Life', 'Travel', 'Vlog', 'Cooking', 'Working'] },
+  { category: 'Competition', count: 185, percentage: 20.56, subCategories: ['Car Match', 'Boxing', 'Snooker', 'Basketball', 'Football'] },
+  { category: 'Video Games', count: 43, percentage: 4.78, subCategories: ['Sandbox', 'Open-World'] },
+  { category: 'Documentary', count: 37, percentage: 4.11, subCategories: ['Nature', 'Science', 'Culture', 'Kids'] },
+  { category: 'Animation & Movie', count: 33, percentage: 3.67, subCategories: ['Animated Movie', 'Car Crash'] },
+  { category: 'Unusual Event', count: 39, percentage: 4.33, subCategories: ['Magic Show', 'Prank', 'Unexpected Situation'] },
+  { category: 'TV Show', count: 88, percentage: 9.78, subCategories: ['TV Series', 'News', 'Talk Show', 'Celebration Show'] }
+];
+
+new Chart(videoCategoryCtx, {
+  type: 'doughnut',
+  data: {
+    labels: videoCategoryData.map(item => item.category),
+    datasets: [{
+      data: videoCategoryData.map(item => item.percentage),
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.8)',
+        'rgba(54, 162, 235, 0.8)', 
+        'rgba(255, 206, 86, 0.8)',
+        'rgba(75, 192, 192, 0.8)',
+        'rgba(153, 102, 255, 0.8)',
+        'rgba(255, 159, 64, 0.8)',
+        'rgba(199, 199, 199, 0.8)',
+        'rgba(83, 102, 255, 0.8)'
+      ],
+      borderColor: 'white',
+      borderWidth: 2,
+      hoverOffset: 15
+    }]
+  },
+  options: {
+    responsive: true,
+    cutout: '60%',
+    animation: {
+      animateRotate: true,
+      animateScale: true
+    },
+    plugins: {
+      legend: {
+        position: 'right',
+        labels: {
+          font: {
+            size: 12
+          },
+          padding: 15,
+          generateLabels: function(chart) {
+            const data = chart.data;
+            return data.labels.map((label, i) => ({
+              text: `${label} (${data.datasets[0].data[i]}%)`,
+              fillStyle: data.datasets[0].backgroundColor[i],
+              strokeStyle: data.datasets[0].borderColor,
+              lineWidth: data.datasets[0].borderWidth,
+              hidden: isNaN(data.datasets[0].data[i]),
+              index: i
+            }));
+          }
+        }
+      },
+      title: {
+        display: true,
+        text: 'Video Category Distribution',
+        font: {
+          size: 18,
+          weight: 'bold'
+        },
+        padding: 20
+      },
+      tooltip: {
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        titleColor: '#000',
+        bodyColor: '#000',
+        borderColor: 'rgba(0, 0, 0, 0.1)',
+        borderWidth: 1,
+        padding: 10,
+        callbacks: {
+          label: function(context) {
+            const label = context.label || '';
+            const value = context.formattedValue;
+            const dataItem = videoCategoryData[context.dataIndex];
+            const subCategories = dataItem.subCategories.join(', ');
+            return [
+              `${label}: ${value}%`,
+              `Count: ${dataItem.count}`,
+              `Sub-categories: ${subCategories}`
+            ];
+          }
+        }
+      }
+    }
+  }
+});
+
+// Fill the table with hover effects
+const tableBody = document.getElementById('videoCategoryTable');
+
+// Add Video Category data with enhanced styling
+const categoryData = [
+  { category: 'Education', count: 182, percentage: 20.22 },
+  { category: 'Life Record', count: 293, percentage: 32.56 },
+  { category: 'Competition', count: 185, percentage: 20.56 },
+  { category: 'Video Games', count: 43, percentage: 4.78 },
+  { category: 'Documentary', count: 37, percentage: 4.11 },
+  { category: 'Animation & Movie', count: 33, percentage: 3.67 },
+  { category: 'Unusual Event', count: 39, percentage: 4.33 },
+  { category: 'TV Show', count: 88, percentage: 9.78 }
+];
+
+categoryData.forEach(item => {
+  const row = tableBody.insertRow();
+  row.style.transition = 'all 0.3s ease';
+  row.onmouseover = function() {
+    this.style.backgroundColor = 'rgba(54, 162, 235, 0.1)';
+    this.style.transform = 'scale(1.02)';
+  };
+  row.onmouseout = function() {
+    this.style.backgroundColor = '';
+    this.style.transform = 'scale(1)';
+  };
+  
+  const cells = [
+    item.category,
+    item.count,
+    item.percentage.toFixed(2) + '%'
+  ];
+  
+  cells.forEach(text => {
+    const cell = row.insertCell();
+    cell.textContent = text;
+    cell.style.padding = '12px';
+  });
+});
+
+// Add total row with special styling
+const totalRow = tableBody.insertRow();
+totalRow.style.fontWeight = 'bold';
+totalRow.style.backgroundColor = 'rgba(54, 162, 235, 0.1)';
+['Total', '900', '100%'].forEach(text => {
+  const cell = totalRow.insertCell();
+  cell.textContent = text;
+  cell.style.padding = '12px';
+});
+
+// Add Video Perspective data
+const perspectiveData = [
+  { perspective: 'EgoCentric', count: 303, percentage: 33.67 },
+  { perspective: 'Three-person', count: 597, percentage: 66.33 }
+];
+
+perspectiveData.forEach(item => {
+  const row = tableBody.insertRow();
+  row.style.transition = 'all 0.3s ease';
+  row.onmouseover = function() {
+    this.style.backgroundColor = 'rgba(75, 192, 192, 0.1)';
+    this.style.transform = 'scale(1.02)';
+  };
+  row.onmouseout = function() {
+    this.style.backgroundColor = '';
+    this.style.transform = 'scale(1)';
+  };
+  
+  const cells = [
+    item.perspective,
+    item.count,
+    item.percentage.toFixed(2) + '%'
+  ];
+  
+  cells.forEach(text => {
+    const cell = row.insertCell();
+    cell.textContent = text;
+    cell.style.padding = '12px';
+  });
+});
+
+// Temporal Clues Chart with enhanced 3D effects
+const temporalCluesCtx = document.getElementById('temporalCluesChart').getContext('2d');
+new Chart(temporalCluesCtx, {
+  type: 'bar',
+  data: {
+    labels: ['Prior Clues', 'Concurrent Clues', 'Subsequent Clues'],
+    datasets: [
+      {
+        label: 'Single Clue',
+        data: [1658, 2592, 259],
+        backgroundColor: function(context) {
+          const gradient = context.chart.ctx.createLinearGradient(0, 0, 0, 400);
+          gradient.addColorStop(0, 'rgba(255, 159, 64, 0.9)');
+          gradient.addColorStop(1, 'rgba(255, 159, 64, 0.4)');
+          return gradient;
+        },
+        borderColor: 'rgba(255, 159, 64, 1)',
+        borderWidth: 2,
+        borderRadius: 8,
+      },
+      {
+        label: 'Multiple Clues',
+        data: [1446, 1314, 75],
+        backgroundColor: function(context) {
+          const gradient = context.chart.ctx.createLinearGradient(0, 0, 0, 400);
+          gradient.addColorStop(0, 'rgba(255, 99, 132, 0.9)');
+          gradient.addColorStop(1, 'rgba(255, 99, 132, 0.4)');
+          return gradient;
+        },
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 2,
+        borderRadius: 8,
+      },
+      {
+        label: 'All',
+        data: [212, 1278, 175],
+        backgroundColor: function(context) {
+          const gradient = context.chart.ctx.createLinearGradient(0, 0, 0, 400);
+          gradient.addColorStop(0, 'rgba(54, 162, 235, 0.9)');
+          gradient.addColorStop(1, 'rgba(54, 162, 235, 0.4)');
+          return gradient;
+        },
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 2,
+        borderRadius: 8,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    animation: {
+      duration: 2000,
+      easing: 'easeInOutQuart'
+    },
+    interaction: {
+      mode: 'index',
+      intersect: false,
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Query Count',
+          font: {
+            size: 14,
+            weight: 'bold'
+          }
+        },
+        grid: {
+          color: 'rgba(0, 0, 0, 0.1)',
+          drawBorder: false
+        }
+      },
+      x: {
+        title: {
+          display: true,
+          text: 'Temporal Clues',
+          font: {
+            size: 14,
+            weight: 'bold'
+          }
+        },
+        grid: {
+          display: false
+        }
+      }
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: 'Temporal Clues Distribution',
+        font: {
+          size: 18,
+          weight: 'bold'
+        },
+        padding: 20
+      },
+      legend: {
+        position: 'top',
+        labels: {
+          font: {
+            size: 12
+          },
+          padding: 15
+        }
+      },
+      tooltip: {
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        titleColor: '#000',
+        bodyColor: '#000',
+        borderColor: 'rgba(0, 0, 0, 0.1)',
+        borderWidth: 1,
+        padding: 10
+      }
+    }
+  }
+});
+
+const ctx = document.getElementById('taskChart').getContext('2d');
+
+const data = {
+  labels: [
+    'Real-Time Visual Understanding',
+    'Object Recognition', 'Attribute Recognition', 'Action Recognition', 'Event Understanding', 'Spatial Understanding', 'Text-Rich Understanding', 'Clips Summarize', 'Causal Reasoning', 'Prospective Reasoning', 'Counting',
+    'Contextual Understanding',
+    'Active Output', 'Anomaly Recognition', 'Misleading Context Recognition', 'Related Context Understanding',
+    'Omni-Source Understanding',
+    'Emotion Recognition', 'Multimodal Alignment', 'Scene Understanding', 'Source Discrimination'
+  ],
+  datasets: [{
+    label: 'Task Count',
+    data: [
+      null,
+      367, 306, 353, 161, 246, 321, 317, 128, 108, 194,
+      null,
+      250, 250, 250, 250,
+      null,
+      250, 250, 250, 250
+    ],
+    backgroundColor: function(context) {
+      const chart = context.chart;
+      const {ctx, chartArea} = chart;
+      if (!chartArea) {
+        return null;
+      }
+      const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+      gradient.addColorStop(0, 'rgba(54, 162, 235, 0.4)');
+      gradient.addColorStop(1, 'rgba(54, 162, 235, 0.9)');
+      return gradient;
+    },
+    borderColor: 'rgba(54, 162, 235, 1)',
+    borderWidth: 2,
+    borderRadius: 8,
+    barPercentage: 0.8,
+  }]
+};
+
+const config = {
+  type: 'bar',
+  data: data,
+  options: {
+    responsive: true,
+    animation: {
+      duration: 2000,
+      easing: 'easeInOutQuart'
+    },
+    interaction: {
+      mode: 'index',
+      intersect: false,
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Task Count',
+          font: {
+            size: 14,
+            weight: 'bold'
+          }
+        },
+        grid: {
+          color: 'rgba(0, 0, 0, 0.1)',
+          drawBorder: false
+        }
+      },
+      x: {
+        title: {
+          display: true,
+          text: 'Task Categories',
+          font: {
+            size: 14,
+            weight: 'bold'
+          }
+        },
+        grid: {
+          display: false
+        }
+      }
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: 'Task Distribution',
+        font: {
+          size: 18,
+          weight: 'bold'
+        },
+        padding: 20
+      },
+      legend: {
+        display: false
+      },
+      tooltip: {
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        titleColor: '#000',
+        bodyColor: '#000',
+        borderColor: 'rgba(0, 0, 0, 0.1)',
+        borderWidth: 1,
+        padding: 10
+      }
+    }
+  },
+};
+
+new Chart(ctx, config);
+
+// Initialize carousel with enhanced navigation
+bulmaCarousel.attach('#charts-carousel', {
+  slidesToScroll: 1,
+  slidesToShow: 1,
+  infinite: true,
+  autoplay: false,
+  navigation: true,
+  navigationKeys: true,
+  navigationSwipe: true,
+  pagination: true
+});
+</script>
+
+
+<!-- RESULTS SECTION
 <section class="hero is-light is-small">
   <div class="hero-body has-text-centered">
     <h1 class="title is-1 mathvista">Experiment Results</h1>
   </div>
-</section>
+</section> -->
 
 <!-- <section class="section">
   <div class="container">
@@ -1344,7 +1933,7 @@
       <div class="column is-8">
         <div class="content">
           <p>
-            This website is website adapted from <a href="https://nerfies.github.io/">Nerfies</a>, licensed under a <a rel="license"
+            This website is website adapted from <a href="https://mathvista.github.io/">MathVista</a>, licensed under a <a rel="license"
                                                 href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
             Commons Attribution-ShareAlike 4.0 International License</a>.
           </p>

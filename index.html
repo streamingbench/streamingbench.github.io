@@ -203,7 +203,7 @@
           <div class="box m-5">
             <div class="content has-text-centered">
               <video autoplay loop muted playsinline width="100%">
-                <source src="static/images/sv.mp4" type="video/mp4">
+                <source src="static/images/example.mp4" type="video/mp4">
                 Your browser does not support the video tag.
               </video>
               <!-- <img src="static/images/mathvista.png" style="width:1.0em;vertical-align: middle" alt="Logo"/> -->
@@ -1705,11 +1705,11 @@ const ctx = document.getElementById('taskChart').getContext('2d');
 
 const data = {
   labels: [
-    'Real-Time Visual Understanding',
-    'Object Recognition', 'Attribute Recognition', 'Action Recognition', 'Event Understanding', 'Spatial Understanding', 'Text-Rich Understanding', 'Clips Summarize', 'Causal Reasoning', 'Prospective Reasoning', 'Counting',
-    'Contextual Understanding',
-    'Active Output', 'Anomaly Recognition', 'Misleading Context Recognition', 'Related Context Understanding',
-    'Omni-Source Understanding',
+    null,
+    'Object Perception', 'Attribute Perception', 'Action Perception', 'Event Understanding', 'Spatial Understanding', 'Text-Rich Understanding', 'Clips Summarization', 'Causal Reasoning', 'Prospective Reasoning', 'Counting',
+    null,
+    'Proactive Output', 'Anomaly Context Understanding', 'Misleading Context Understanding', 'Sequential Question Answering',
+    null,
     'Emotion Recognition', 'Multimodal Alignment', 'Scene Understanding', 'Source Discrimination'
   ],
   datasets: [{
@@ -1723,17 +1723,42 @@ const data = {
       250, 250, 250, 250
     ],
     backgroundColor: function(context) {
+      const index = context.dataIndex;
       const chart = context.chart;
       const {ctx, chartArea} = chart;
       if (!chartArea) {
         return null;
       }
-      const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-      gradient.addColorStop(0, 'rgba(54, 162, 235, 0.4)');
-      gradient.addColorStop(1, 'rgba(54, 162, 235, 0.9)');
-      return gradient;
+      if ([12, 13, 14, 15, 16].includes(index)) {
+        // For 'Active Output' group - use red gradient
+        const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+        gradient.addColorStop(0, 'rgba(255, 99, 132, 0.4)');
+        gradient.addColorStop(1, 'rgba(255, 99, 132, 0.9)');
+        return gradient;
+      } else if ([17, 18, 19, 20, 21].includes(index)) {
+        // For 'Emotion Recognition' group - use green gradient
+        const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+        gradient.addColorStop(0, 'rgba(75, 192, 192, 0.4)');
+        gradient.addColorStop(1, 'rgba(75, 192, 192, 0.9)');
+        return gradient;
+      } else {
+        // Default - blue gradient
+        const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+        gradient.addColorStop(0, 'rgba(54, 162, 235, 0.4)');
+        gradient.addColorStop(1, 'rgba(54, 162, 235, 0.9)');
+        return gradient;
+      }
     },
-    borderColor: 'rgba(54, 162, 235, 1)',
+    borderColor: function(context) {
+      const index = context.dataIndex;
+      if ([12, 13, 14, 15, 16].includes(index)) {
+        return 'rgba(255, 99, 132, 1)'; // Red border
+      } else if ([17, 18, 19, 20, 21].includes(index)) {
+        return 'rgba(75, 192, 192, 1)'; // Green border
+      } else {
+        return 'rgba(54, 162, 235, 1)'; // Blue border
+      }
+    },
     borderWidth: 2,
     borderRadius: 8,
     barPercentage: 0.8,

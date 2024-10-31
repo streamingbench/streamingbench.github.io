@@ -203,17 +203,15 @@
           <div class="box m-5">
             <div class="content has-text-centered">
               <video autoplay loop muted playsinline width="100%">
-                <source src="static/images/example.mp4" type="video/mp4">
+                <source src="static/images/sv.mp4" type="video/mp4">
                 Your browser does not support the video tag.
               </video>
-              <!-- <img src="static/images/mathvista.png" style="width:1.0em;vertical-align: middle" alt="Logo"/> -->
               </p>
             </div>
           </div>
           <div class="box m-5">
             <div class="content has-text-centered">
               <img src="static/images/question_sample_2.png" alt="geometric reasoning" width="84%"/>
-              <!-- <img src="static/images/mathvista.png" style="width:1.0em;vertical-align: middle" alt="Logo"/> -->
               </p>
             </div>
           </div>
@@ -946,7 +944,11 @@
                 <td style="vertical-align: middle;">36.00</td>
               </tr>
               <tr>
-                <td style="vertical-align: middle;"></td>
+                <td style="vertical-align: middle;">
+                  <span class="icon" style="color: #cd7f32;">
+                    <i class="fas fa-medal"></i>
+                  </span>
+                </td>
                 <td style="text-align: left; padding: 2px 10px;"><b class=""><a href="#" class="ext-link" style="font-size: 16px; margin-left: 5px;">LLaVA-OneVision
                   <p style="font-size: 12px; margin-left: 5px; color: #858383;">Microsoft</p>
                 </a></b></td>
@@ -960,7 +962,12 @@
                 <td style="vertical-align: middle;">44.80</td>
               </tr>
               <tr>
-                <td style="vertical-align: middle;"></td>
+、
+                <td style="vertical-align: middle;">
+                  <span class="icon" style="color: silver;">
+                    <i class="fas fa-medal"></i>
+                  </span>
+                </td>
                 <td style="text-align: left; padding: 2px 10px;"><b class=""><a href="#" class="ext-link" style="font-size: 16px; margin-left: 5px;">GPT-4o
                   <p style="font-size: 12px; margin-left: 5px; color: #858383;">OpenAI</p>
                 </a></b></td>
@@ -1030,7 +1037,11 @@
                 <td style="vertical-align: middle;">30.00</td>
               </tr>
               <tr>
-                <td style="vertical-align: middle;"></td>
+                <td style="vertical-align: middle;">
+                  <span class="icon" style="color: #cd7f32;">
+                    <i class="fas fa-medal"></i>
+                  </span>
+                </td>
                 <td style="text-align: left; padding: 2px 10px;"><b class=""><a href="#" class="ext-link" style="font-size: 16px; margin-left: 5px;">GPT-4o
                   <p style="font-size: 12px; margin-left: 5px; color: #858383;">OpenAI</p>
                 </a></b></td>
@@ -1044,7 +1055,11 @@
                 <td style="vertical-align: middle;">29.41</td>
               </tr>
               <tr>
-                <td style="vertical-align: middle;"></td>
+                <td style="vertical-align: middle;">
+                  <span class="icon" style="color: silver;">
+                    <i class="fas fa-medal"></i>
+                  </span>
+                </td>
                 <td style="text-align: left; padding: 2px 10px;"><b class=""><a href="#" class="ext-link" style="font-size: 16px; margin-left: 5px;">Claude 3.5 Sonnet
                   <p style="font-size: 12px; margin-left: 5px; color: #858383;">Anthropic</p>
                 </a></b></td>
@@ -1241,6 +1256,32 @@
   <h2 class="title is-3" style="text-align: center;">Data Statistics</h2>
   <div class="container">
     <div id="charts-carousel" class="carousel">
+      <!-- Answer Distribution Chart -->
+      <div class="box m-5 chart-container" style="background: linear-gradient(135deg, #ffffff, #f8f9fa); border-radius: 20px; box-shadow: 0 15px 35px rgba(50,115,220,0.1); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);"
+           onmouseover="this.style.transform='translateY(-5px)'" 
+           onmouseout="this.style.transform='translateY(0)'">
+        <div class="columns is-centered">
+          <div class="column is-half">
+            <div class="chart-wrapper" style="padding: 25px;">
+              <canvas id="answerDistChart" style="max-width: 100%; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));"></canvas>
+            </div>
+          </div>
+          <div class="column is-half">
+            <table class="table is-fullwidth is-hoverable" style="background: transparent; margin-top: 25px; border-radius: 10px; overflow: hidden;">
+              <thead>
+                <tr>
+                  <th style="border-bottom: 3px solid #3273dc; color: #363636; font-weight: 600;">Option</th>
+                  <th style="border-bottom: 3px solid #3273dc; color: #363636; font-weight: 600;">Count</th>
+                  <th style="border-bottom: 3px solid #3273dc; color: #363636; font-weight: 600;">Percentage</th>
+                </tr>
+              </thead>
+              <tbody id="answerDistTable" style="font-size: 0.95rem;">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
       <!-- Video Category Chart -->
       <div class="box m-5 chart-container" style="background: linear-gradient(135deg, #ffffff, #f8f9fa); border-radius: 20px; box-shadow: 0 15px 35px rgba(50,115,220,0.1); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);" 
            onmouseover="this.style.transform='translateY(-5px)'" 
@@ -1306,6 +1347,30 @@
           <p> </p>
         </div>
       </div>
+
+      <!-- Question Length Distribution -->
+      <div class="box m-5 chart-container" style="background: linear-gradient(135deg, #ffffff, #f8f9fa); border-radius: 20px; box-shadow: 0 15px 35px rgba(50,115,220,0.1); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);"
+     onmouseover="this.style.transform='translateY(-5px)'" 
+     onmouseout="this.style.transform='translateY(0)'">
+  <div class="content has-text-centered">
+    <h3 class="title is-4">Question Length Distribution</h3>
+    <canvas id="questionLengthChart"></canvas>
+    <p style="margin-top: 20px;">
+      Minimum length: 4 words<br>
+      Maximum length: 34 words<br>
+      Average length: 11.57 words
+    </p>
+  </div>
+</div>
+
+<div class="box m-5 chart-container" style="background: linear-gradient(135deg, #ffffff, #f8f9fa); border-radius: 20px; box-shadow: 0 15px 35px rgba(50,115,220,0.1); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);"
+onmouseover="this.style.transform='translateY(-5px)'" 
+onmouseout="this.style.transform='translateY(0)'">
+<div class="content has-text-centered">
+<h3 class="title is-4">Options Length Distribution</h3>
+<canvas id="optionsLengthChart"></canvas>
+</div>
+</div>
       
     </div>
   </div>
@@ -1313,6 +1378,225 @@
 </section>
 
 <script>
+
+const questionLengthCtx = document.getElementById('questionLengthChart').getContext('2d');
+new Chart(questionLengthCtx, {
+  type: 'bar',
+  data: {
+    labels: ['(0, 5]', '(5, 10]', '(10, 15]', '(15, 20]', '(20, 25]', '(25, 30]', '(30, 35]'],
+    datasets: [{
+      label: 'Question Count',
+      data: [297, 1677, 1526, 538, 168, 27, 17],
+      backgroundColor: function(context) {
+        const gradient = context.chart.ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'rgba(54, 162, 235, 0.9)');
+        gradient.addColorStop(1, 'rgba(54, 162, 235, 0.4)');
+        return gradient;
+      },
+      borderColor: 'rgba(54, 162, 235, 1)',
+      borderWidth: 2,
+      borderRadius: 8,
+      barPercentage: 0.8,
+    }]
+  },
+  options: {
+    responsive: true,
+    animation: {
+      duration: 2000,
+      easing: 'easeInOutQuart'
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Count',
+          font: { size: 14, weight: 'bold' }
+        }
+      },
+      x: {
+        title: {
+          display: true,
+          text: 'Word Count',
+          font: { size: 14, weight: 'bold' }
+        }
+      }
+    },
+    plugins: {
+      legend: {
+        display: false
+      },
+      tooltip: {
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        titleColor: '#000',
+        bodyColor: '#000',
+        borderColor: 'rgba(54, 162, 235, 0.8)',
+        borderWidth: 1,
+        padding: 10
+      }
+    }
+  }
+});
+// Answer Distribution Chart
+const answerDistCtx = document.getElementById('answerDistChart').getContext('2d');
+const answerData = [
+  { option: 'A', count: 1064, percentage: 25.0 },
+  { option: 'B', count: 1059, percentage: 24.9 },
+  { option: 'C', count: 1062, percentage: 25.0 },
+  { option: 'D', count: 1065, percentage: 25.1 }
+];
+
+new Chart(answerDistCtx, {
+  type: 'doughnut',
+  data: {
+    labels: answerData.map(item => item.option),
+    datasets: [{
+      data: answerData.map(item => item.percentage),
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.8)',
+        'rgba(54, 162, 235, 0.8)',
+        'rgba(255, 206, 86, 0.8)',
+        'rgba(75, 192, 192, 0.8)'
+      ],
+      borderColor: 'white',
+      borderWidth: 2,
+      hoverOffset: 15
+    }]
+  },
+  options: {
+    responsive: true,
+    cutout: '60%',
+    animation: {
+      animateRotate: true,
+      animateScale: true
+    },
+    plugins: {
+      legend: {
+        position: 'right',
+        labels: {
+          font: {
+            size: 12
+          },
+          padding: 15
+        }
+      },
+      title: {
+        display: true,
+        text: 'Answer Distribution',
+        font: {
+          size: 18,
+          weight: 'bold'
+        },
+        padding: 20
+      },
+      tooltip: {
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        titleColor: '#000',
+        bodyColor: '#000',
+        borderColor: 'rgba(0, 0, 0, 0.1)',
+        borderWidth: 1,
+        padding: 10
+      }
+    }
+  }
+});
+
+const optionsLengthCtx = document.getElementById('optionsLengthChart').getContext('2d');
+new Chart(optionsLengthCtx, {
+  type: 'bar',
+  data: {
+    labels: ['0', '1', '2', '3', '4', '5', '6-10', '11-20', '21-30', '31-50', '>50'],
+    datasets: [{
+      label: 'Options Count',
+      data: [2, 306, 2973, 1296, 1605, 992, 2997, 3643, 1439, 747, 250],
+      backgroundColor: function(context) {
+        const gradient = context.chart.ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'rgba(75, 192, 192, 0.9)');
+        gradient.addColorStop(1, 'rgba(75, 192, 192, 0.4)');
+        return gradient;
+      },
+      borderColor: 'rgba(75, 192, 192, 1)',
+      borderWidth: 2,
+      borderRadius: 8,
+      barPercentage: 0.8,
+    }]
+  },
+  options: {
+    responsive: true,
+    animation: {
+      duration: 2000,
+      easing: 'easeInOutQuart'
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Count',
+          font: { size: 14, weight: 'bold' }
+        }
+      },
+      x: {
+        title: {
+          display: true,
+          text: 'Word Count',
+          font: { size: 14, weight: 'bold' }
+        }
+      }
+    },
+    plugins: {
+      legend: {
+        display: false
+      },
+      tooltip: {
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        titleColor: '#000',
+        bodyColor: '#000',
+        borderColor: 'rgba(75, 192, 192, 0.8)',
+        borderWidth: 1,
+        padding: 10
+      }
+    }
+  }
+});
+
+// Fill Answer Distribution table
+const answerTableBody = document.getElementById('answerDistTable');
+answerData.forEach(item => {
+  const row = answerTableBody.insertRow();
+  row.style.transition = 'all 0.3s ease';
+  row.onmouseover = function() {
+    this.style.backgroundColor = 'rgba(54, 162, 235, 0.1)';
+    this.style.transform = 'scale(1.02)';
+  };
+  row.onmouseout = function() {
+    this.style.backgroundColor = '';
+    this.style.transform = 'scale(1)';
+  };
+  
+  const cells = [
+    item.option,
+    item.count,
+    item.percentage.toFixed(1) + '%'
+  ];
+  
+  cells.forEach(text => {
+    const cell = row.insertCell();
+    cell.textContent = text;
+    cell.style.padding = '12px';
+  });
+});
+
+// Add total row
+const totalAnswerRow = answerTableBody.insertRow();
+totalAnswerRow.style.fontWeight = 'bold';
+totalAnswerRow.style.backgroundColor = 'rgba(54, 162, 235, 0.1)';
+['Total', '4250', '100%'].forEach(text => {
+  const cell = totalAnswerRow.insertCell();
+  cell.textContent = text;
+  cell.style.padding = '12px';
+});
+
 // Query Count Chart
 const queryCountCtx = document.getElementById('queryCountChart').getContext('2d');
 new Chart(queryCountCtx, {
@@ -1846,6 +2130,9 @@ bulmaCarousel.attach('#charts-carousel', {
   navigationSwipe: true,
   pagination: true
 });
+
+
+
 </script>
 
 

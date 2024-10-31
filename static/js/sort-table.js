@@ -90,6 +90,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (table) {
       sortTable(table, 5, -1); // 假设 "Overall" 列的索引是2
     }
+    for (let i = 1; i <= totalPages; i++) {
+      const table = document.getElementById(`results${i}`);
+      if (table) {
+        // 确保表格已经初始化
+        if (!table.getAttribute('data-js-sort-table')) {
+          sortTable.init();
+        }
+        // 执行排序，5是Overall列索引，-1表示降序
+        sortTable(table, 5, -1);
+      }
+    }
   });
 
 
